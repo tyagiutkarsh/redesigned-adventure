@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Europe Trip 2026 - Tour de France Alpine Stages</title>
+    <title>Europe Trip 2026 - Tour de France & More</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -12,6 +12,7 @@
             --secondary: #f59e0b;
             --success: #10b981;
             --warning: #ef4444;
+            --purple: #7c3aed;
             --gray-50: #f9fafb;
             --gray-100: #f3f4f6;
             --gray-200: #e5e7eb;
@@ -22,11 +23,7 @@
             --gray-900: #111827;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Inter', sans-serif;
@@ -36,417 +33,311 @@
         }
         
         .hero {
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(147, 51, 234, 0.9)),
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(124, 58, 237, 0.9)),
                         url('https://images.unsplash.com/photo-1696054430983-b75eb77462c6?w=1920&q=80') center/cover;
             color: white;
-            padding: 80px 20px;
+            padding: 60px 20px;
             text-align: center;
         }
         
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
+        .hero h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 12px; }
+        .hero p { font-size: 1.125rem; opacity: 0.9; max-width: 700px; margin: 0 auto; }
         
-        .hero p {
-            font-size: 1.25rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        
-        .trip-meta {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-        
-        .meta-card {
+        /* Tabs */
+        .tabs-container {
             background: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border-radius: 16px;
+            margin: -40px auto 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .tabs-header {
+            display: flex;
+            border-bottom: 2px solid var(--gray-200);
+            overflow-x: auto;
+        }
+        
+        .tab-btn {
+            flex: 1;
+            min-width: 200px;
+            padding: 20px 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            color: var(--gray-600);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+        }
+        
+        .tab-btn:hover { background: var(--gray-50); }
+        
+        .tab-btn.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background: var(--gray-50);
+        }
+        
+        .tab-btn .tab-icon { font-size: 1.5rem; display: block; margin-bottom: 4px; }
+        .tab-btn .tab-meta { font-size: 0.75rem; font-weight: 400; color: var(--gray-500); margin-top: 4px; }
+        
+        .tab-content { display: none; padding: 32px; }
+        .tab-content.active { display: block; }
+        
+        /* Trip Header */
+        .trip-header {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .trip-stat {
+            background: var(--gray-100);
+            padding: 12px 20px;
+            border-radius: 8px;
             text-align: center;
         }
         
-        .meta-card .icon {
-            font-size: 2rem;
-            margin-bottom: 8px;
-        }
+        .trip-stat .label { font-size: 0.75rem; color: var(--gray-600); text-transform: uppercase; }
+        .trip-stat .value { font-size: 1.125rem; font-weight: 600; color: var(--gray-900); }
         
-        .meta-card .label {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            margin-bottom: 4px;
-        }
-        
-        .meta-card .value {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-        
-        .section-title {
-            font-size: 1.75rem;
-            font-weight: 700;
+        /* Events badges */
+        .events-included {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
             margin-bottom: 24px;
-            color: var(--gray-900);
         }
         
-        .alert {
-            background: #fef3c7;
-            border-left: 4px solid var(--secondary);
-            padding: 16px 20px;
-            border-radius: 0 8px 8px 0;
-            margin-bottom: 32px;
+        .event-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 0.8125rem;
+            font-weight: 500;
         }
         
-        .alert-title {
-            font-weight: 600;
-            color: #92400e;
-            margin-bottom: 4px;
-        }
+        .event-badge.tdf { background: #fef3c7; color: #92400e; }
+        .event-badge.f1 { background: #fee2e2; color: #991b1b; }
+        .event-badge.biennale { background: #dbeafe; color: #1e40af; }
         
-        .alert p {
-            color: #78350f;
-            font-size: 0.9375rem;
-        }
-        
-        .timeline {
-            position: relative;
-        }
+        /* Timeline */
+        .timeline { position: relative; }
         
         .day-card {
             background: white;
-            border-radius: 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            margin-bottom: 20px;
             overflow: hidden;
-            margin-bottom: 32px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.1);
         }
         
+        .day-card.highlight { border: 2px solid var(--secondary); }
+        .day-card.f1-highlight { border: 2px solid var(--warning); }
+        .day-card.art-highlight { border: 2px solid var(--purple); }
+        
         .day-header {
-            position: relative;
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            background: var(--gray-50);
+            border-bottom: 1px solid var(--gray-200);
         }
         
         .day-image {
-            width: 100%;
-            height: 240px;
+            width: 120px;
+            height: 80px;
             object-fit: cover;
-        }
-        
-        .day-badge {
-            position: absolute;
-            top: 16px;
-            left: 16px;
-            background: var(--primary);
-            color: white;
-            padding: 8px 16px;
             border-radius: 8px;
-            font-weight: 600;
+            flex-shrink: 0;
         }
         
-        .day-highlight {
-            position: absolute;
-            top: 16px;
-            right: 16px;
-            background: var(--secondary);
-            color: white;
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.75rem;
+        .day-info { flex: 1; }
+        .day-info h3 { font-size: 1.125rem; margin-bottom: 4px; }
+        .day-date { font-size: 0.8125rem; color: var(--gray-600); }
+        
+        .day-badges { display: flex; gap: 6px; margin-top: 8px; }
+        .day-badge {
+            font-size: 0.6875rem;
+            padding: 2px 8px;
+            border-radius: 4px;
             font-weight: 600;
             text-transform: uppercase;
         }
+        .day-badge.queen { background: var(--secondary); color: white; }
+        .day-badge.f1 { background: var(--warning); color: white; }
+        .day-badge.art { background: var(--purple); color: white; }
         
-        .day-content {
-            padding: 24px;
-        }
+        .day-content { padding: 16px; }
+        .day-summary { font-size: 0.9375rem; color: var(--gray-700); margin-bottom: 12px; }
         
-        .day-title {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
-        }
-        
-        .day-title h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-        
-        .day-date {
-            color: var(--gray-600);
-            font-size: 0.9375rem;
-            margin-bottom: 16px;
-        }
-        
-        .day-summary {
-            background: var(--gray-100);
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .day-summary p {
-            font-size: 0.9375rem;
-            color: var(--gray-700);
-        }
-        
-        .activities {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .activities { display: flex; flex-direction: column; gap: 8px; }
         
         .activity {
             display: flex;
             align-items: flex-start;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 8px;
+            gap: 10px;
+            padding: 10px;
             background: var(--gray-50);
-        }
-        
-        .activity-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            flex-shrink: 0;
-        }
-        
-        .activity-icon.travel { background: #dbeafe; }
-        .activity-icon.visit { background: #dcfce7; }
-        .activity-icon.meal { background: #fef3c7; }
-        .activity-icon.stay { background: #f3e8ff; }
-        .activity-icon.event { background: #fee2e2; }
-        
-        .activity-details {
-            flex: 1;
-        }
-        
-        .activity-time {
-            font-size: 0.75rem;
-            color: var(--gray-600);
-            font-weight: 500;
-        }
-        
-        .activity-title {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
-        
-        .activity-desc {
+            border-radius: 6px;
             font-size: 0.875rem;
-            color: var(--gray-600);
         }
+        
+        .activity-icon { font-size: 1rem; }
+        .activity-title { font-weight: 500; }
+        .activity-desc { color: var(--gray-600); font-size: 0.8125rem; }
         
         .stay-info {
+            margin-top: 12px;
+            padding: 12px;
             background: linear-gradient(135deg, #f3e8ff, #fce7f3);
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 16px;
-        }
-        
-        .stay-info h4 {
+            border-radius: 6px;
             font-size: 0.875rem;
-            color: var(--gray-600);
-            margin-bottom: 4px;
         }
         
-        .stay-info p {
-            font-weight: 600;
-            color: var(--gray-900);
-        }
+        .stay-info strong { color: var(--gray-700); }
         
-        .cost-estimate {
-            font-size: 0.875rem;
-            color: var(--gray-600);
-            margin-top: 4px;
-        }
-        
-        .logistics {
-            display: flex;
-            gap: 16px;
-            margin-top: 16px;
-            flex-wrap: wrap;
-        }
-        
-        .logistics-item {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.875rem;
-            color: var(--gray-600);
-        }
-        
+        /* Budget Section */
         .budget-section {
-            background: white;
-            border-radius: 16px;
-            padding: 32px;
-            margin-top: 40px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: var(--gray-100);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 32px;
         }
+        
+        .budget-section h3 { margin-bottom: 16px; }
         
         .budget-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 24px;
-            margin-top: 24px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
         }
         
         .budget-item {
             display: flex;
             justify-content: space-between;
-            padding: 16px;
-            background: var(--gray-50);
-            border-radius: 8px;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            font-size: 0.875rem;
         }
         
-        .budget-item .category {
-            font-weight: 500;
-        }
-        
-        .budget-item .amount {
-            font-weight: 600;
-            color: var(--primary);
-        }
+        .budget-item .amount { font-weight: 600; color: var(--primary); }
         
         .budget-total {
             display: flex;
             justify-content: space-between;
-            padding: 20px;
+            padding: 16px;
             background: var(--primary);
             color: white;
             border-radius: 8px;
-            margin-top: 16px;
-            font-size: 1.25rem;
+            margin-top: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
         }
         
-        .visa-section {
-            background: white;
-            border-radius: 16px;
-            padding: 32px;
-            margin-top: 40px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-        
-        .visa-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
-            margin-top: 24px;
-        }
-        
-        .visa-card {
-            padding: 20px;
-            border: 2px solid var(--gray-200);
-            border-radius: 12px;
-        }
-        
-        .visa-card h4 {
+        /* Route Map */
+        .route-visual {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 12px;
-            color: var(--gray-900);
+            padding: 20px;
+            background: var(--gray-100);
+            border-radius: 12px;
+            margin-bottom: 24px;
+            overflow-x: auto;
+            flex-wrap: wrap;
         }
         
-        .visa-card ul {
-            list-style: none;
-            font-size: 0.9375rem;
-            color: var(--gray-600);
-        }
-        
-        .visa-card li {
-            padding: 6px 0;
-            padding-left: 20px;
-            position: relative;
-        }
-        
-        .visa-card li::before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: var(--success);
-        }
-        
-        .events-note {
-            background: linear-gradient(135deg, #eff6ff, #f0fdf4);
-            border-radius: 16px;
-            padding: 32px;
-            margin-top: 40px;
-        }
-        
-        .events-note h3 {
-            margin-bottom: 16px;
-        }
-        
-        .event-item {
+        .route-stop {
             display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 16px 0;
-            border-bottom: 1px solid var(--gray-200);
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            min-width: 80px;
         }
         
-        .event-item:last-child {
-            border-bottom: none;
-        }
+        .route-stop .icon { font-size: 1.5rem; margin-bottom: 4px; }
+        .route-stop .name { font-size: 0.75rem; font-weight: 500; }
+        .route-arrow { color: var(--gray-400); font-size: 1.25rem; }
         
-        .event-status {
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-        
-        .event-status.included { background: #dcfce7; color: #166534; }
-        .event-status.possible { background: #fef3c7; color: #92400e; }
-        .event-status.conflict { background: #fee2e2; color: #991b1b; }
-        
-        .tips-section {
+        /* Visa Section */
+        .visa-section {
             background: white;
-            border-radius: 16px;
-            padding: 32px;
-            margin-top: 40px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 24px;
         }
         
-        .tips-grid {
+        .visa-section h3 { margin-bottom: 16px; }
+        
+        .visa-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 16px;
+        }
+        
+        .visa-card {
+            padding: 16px;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+        }
+        
+        .visa-card h4 { margin-bottom: 8px; font-size: 0.9375rem; }
+        .visa-card ul { list-style: none; font-size: 0.8125rem; color: var(--gray-600); }
+        .visa-card li { padding: 4px 0; padding-left: 16px; position: relative; }
+        .visa-card li::before { content: "✓"; position: absolute; left: 0; color: var(--success); }
+        
+        /* Tips */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
             margin-top: 24px;
         }
         
         .tip-card {
-            padding: 20px;
-            background: var(--gray-50);
-            border-radius: 12px;
+            padding: 16px;
+            background: var(--gray-100);
+            border-radius: 8px;
         }
         
-        .tip-card h4 {
-            margin-bottom: 8px;
-            color: var(--gray-900);
+        .tip-card h4 { font-size: 0.9375rem; margin-bottom: 6px; }
+        .tip-card p { font-size: 0.8125rem; color: var(--gray-600); }
+        
+        /* Comparison */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 24px;
+            font-size: 0.875rem;
         }
         
-        .tip-card p {
-            font-size: 0.9375rem;
-            color: var(--gray-600);
+        .comparison-table th, .comparison-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
         }
+        
+        .comparison-table th { background: var(--gray-100); font-weight: 600; }
+        .comparison-table tr:hover { background: var(--gray-50); }
+        
+        .check { color: var(--success); }
+        .cross { color: var(--gray-400); }
         
         footer {
             text-align: center;
@@ -456,816 +347,878 @@
         }
         
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .day-image {
-                height: 180px;
-            }
+            .hero h1 { font-size: 1.75rem; }
+            .tab-btn { min-width: 150px; padding: 16px; }
+            .day-image { width: 80px; height: 60px; }
         }
     </style>
 </head>
 <body>
     <header class="hero">
-        <h1>🚴 Tour de France 2026</h1>
-        <p>12-Day Budget Solo Trip from Bengaluru to witness the legendary Alpine stages at Alpe d'Huez</p>
+        <h1>🇪🇺 Europe Trip Planner 2026</h1>
+        <p>Three trip options combining Tour de France, F1 Hungarian GP, and Venice Biennale. Budget solo trips from Bengaluru.</p>
     </header>
     
     <main class="container">
-        <section class="trip-meta">
-            <div class="meta-card">
-                <div class="icon">📅</div>
-                <div class="label">Travel Dates</div>
-                <div class="value">July 18-29, 2026</div>
+        <div class="tabs-container">
+            <div class="tabs-header">
+                <button class="tab-btn active" onclick="showTab('trip1')">
+                    <span class="tab-icon">🚴</span>
+                    Trip 1: Tour de France
+                    <span class="tab-meta">12 days • ₹1.8-2.2L</span>
+                </button>
+                <button class="tab-btn" onclick="showTab('trip2')">
+                    <span class="tab-icon">🚴🏎️</span>
+                    Trip 2: TdF + Hungarian GP
+                    <span class="tab-meta">14 days • ₹2.2-2.6L</span>
+                </button>
+                <button class="tab-btn" onclick="showTab('trip3')">
+                    <span class="tab-icon">🚴🏎️🎨</span>
+                    Trip 3: TdF + F1 + Biennale
+                    <span class="tab-meta">15 days • ₹2.5-3.0L</span>
+                </button>
             </div>
-            <div class="meta-card">
-                <div class="icon">🌍</div>
-                <div class="label">Destinations</div>
-                <div class="value">France (Alps)</div>
+            
+            <!-- TRIP 1: Tour de France Only -->
+            <div id="trip1" class="tab-content active">
+                <div class="trip-header">
+                    <div class="trip-stat">
+                        <div class="label">Duration</div>
+                        <div class="value">12 Days</div>
+                    </div>
+                    <div class="trip-stat">
+                        <div class="label">Dates</div>
+                        <div class="value">July 18-29</div>
+                    </div>
+                    <div class="trip-stat">
+                        <div class="label">Countries</div>
+                        <div class="value">France</div>
+                    </div>
+                    <div class="trip-stat">
+                        <div class="label">Budget</div>
+                        <div class="value">₹1.8-2.2L</div>
+                    </div>
+                </div>
+                
+                <div class="events-included">
+                    <span class="event-badge tdf">🚴 Tour de France - Stages 18, 19, 20 (Alpe d'Huez x2)</span>
+                    <span class="event-badge tdf">🏆 Paris Finale - Montmartre & Champs-Élysées</span>
+                </div>
+                
+                <div class="route-visual">
+                    <div class="route-stop"><span class="icon">✈️</span><span class="name">Bengaluru</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🗼</span><span class="name">Paris</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🏔️</span><span class="name">Grenoble</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🚴</span><span class="name">Alpe d'Huez</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🏆</span><span class="name">Paris</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">✈️</span><span class="name">Bengaluru</span></div>
+                </div>
+                
+                <h3>📍 Day-by-Day Itinerary</h3>
+                <div class="timeline">
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=80" alt="Paris" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 1-2: Bengaluru → Paris</h3>
+                                <div class="day-date">July 18-19, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Overnight flight to Paris. Arrive, rest, explore Montmartre (where the Tour finale will be!).</p>
+                            <div class="stay-info"><strong>Stay:</strong> Hostel in Paris • ~€30/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1679587008794-4c5963d0b39d?w=400&q=80" alt="Grenoble" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 3: Paris → Grenoble</h3>
+                                <div class="day-date">July 20, 2026 (Tour Rest Day)</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">TGV to Grenoble (~3hrs, €30-50). Gateway to the Alps. Take Bastille cable car for views.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Hostel in Grenoble • ~€30/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1725864832640-7b022026e61c?w=400&q=80" alt="Alps" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 4-5: Stage 17 & 18</h3>
+                                <div class="day-date">July 21-22, 2026</div>
+                                <div class="day-badges"><span class="day-badge queen">Mountain Stages</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Watch Stage 17 (Chambéry→Voiron) and Stage 18 (Voiron→Orcières-Merlette, 185km mountain stage!).</p>
+                            <div class="stay-info"><strong>Stay:</strong> Bourg d'Oisans area • ~€35-50/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1482659853714-4bf4b5f2e7bf?w=400&q=80" alt="Alpe d'Huez" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 6-7: ALPE D'HUEZ!</h3>
+                                <div class="day-date">July 23-24, 2026</div>
+                                <div class="day-badges"><span class="day-badge queen">👑 Queen Stage</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">THE MAIN EVENT! Camp overnight on the mountain. Stage 19: Gap→Alpe d'Huez (128km). The legendary 21 hairpins!</p>
+                            <div class="activities">
+                                <div class="activity">
+                                    <span class="activity-icon">⛺</span>
+                                    <div><div class="activity-title">Camp at Dutch Corner (Bend 7)</div>
+                                    <div class="activity-desc">Join the party! BBQs, music, fans from everywhere</div></div>
+                                </div>
+                                <div class="activity">
+                                    <span class="activity-icon">🚴</span>
+                                    <div><div class="activity-title">Watch riders battle up the climb</div>
+                                    <div class="activity-desc">Pogačar vs Vingegaard on cycling's most famous mountain</div></div>
+                                </div>
+                            </div>
+                            <div class="stay-info"><strong>Stay:</strong> Camp on mountain or Bourg d'Oisans • Free-€40</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1696054430983-b75eb77462c6?w=400&q=80" alt="Galibier" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 8: STAGE 20 - THE BRUTAL ONE</h3>
+                                <div class="day-date">July 25, 2026</div>
+                                <div class="day-badges"><span class="day-badge queen">🔥 5,600m Climbing</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Hardest stage of the Tour! Croix de Fer, Télégraphe, Col du Galibier (2,631m), Sarenne → Alpe d'Huez AGAIN. This is where the Tour is won!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Grenoble • ~€35/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1716131369717-0dfad8959410?w=400&q=80" alt="Paris finale" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 9: Paris Finale!</h3>
+                                <div class="day-date">July 26, 2026</div>
+                                <div class="day-badges"><span class="day-badge queen">🏆 Yellow Jersey</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">TGV to Paris. Watch Stage 21 finale on Montmartre slopes, then Champs-Élysées. Champagne celebration!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Hostel in Paris • ~€35/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1575323734774-d6c47992c537?w=400&q=80" alt="Paris" class="day-image">
+                            <div class="day-info">
+                                <h3>Days 10-12: Paris & Return</h3>
+                                <div class="day-date">July 27-29, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Explore Paris (Louvre, Notre-Dame, Seine). Fly home July 29.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Hostel in Paris • ~€35/night</div>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>💰 Budget Breakdown</h3>
+                    <div class="budget-grid">
+                        <div class="budget-item"><span>✈️ Flights (BLR↔Paris)</span><span class="amount">₹50-60K</span></div>
+                        <div class="budget-item"><span>🛏️ Accommodation (11 nights)</span><span class="amount">₹25-35K</span></div>
+                        <div class="budget-item"><span>🚄 Transport (TGV, buses)</span><span class="amount">₹8-12K</span></div>
+                        <div class="budget-item"><span>🍽️ Food</span><span class="amount">₹20-28K</span></div>
+                        <div class="budget-item"><span>🎫 Activities</span><span class="amount">₹5-8K</span></div>
+                        <div class="budget-item"><span>🛡️ Visa + Insurance</span><span class="amount">₹10-12K</span></div>
+                    </div>
+                    <div class="budget-total">
+                        <span>TOTAL</span>
+                        <span>₹1,80,000 - ₹2,20,000</span>
+                    </div>
+                </div>
             </div>
-            <div class="meta-card">
-                <div class="icon">👤</div>
-                <div class="label">Travel Style</div>
-                <div class="value">Solo Budget</div>
+            
+            <!-- TRIP 2: Tour de France + Hungarian GP -->
+            <div id="trip2" class="tab-content">
+                <div class="trip-header">
+                    <div class="trip-stat">
+                        <div class="label">Duration</div>
+                        <div class="value">14 Days</div>
+                    </div>
+                    <div class="trip-stat">
+                        <div class="label">Dates</div>
+                        <div class="value">July 16-29</div>
+                    </div>
+                    <div class="trip-stat">
+                        <div class="label">Countries</div>
+                        <div class="value">France, Hungary</div>
+                    </div>
+                    <div class="trip-stat">
+                        <div class="label">Budget</div>
+                        <div class="value">₹2.2-2.6L</div>
+                    </div>
+                </div>
+                
+                <div class="events-included">
+                    <span class="event-badge tdf">🚴 Tour de France - Stages 15, 16, 17</span>
+                    <span class="event-badge f1">🏎️ F1 Hungarian GP - Hungaroring (July 24-26)</span>
+                </div>
+                
+                <div class="route-visual">
+                    <div class="route-stop"><span class="icon">✈️</span><span class="name">Bengaluru</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🗼</span><span class="name">Paris</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🏔️</span><span class="name">Alps</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🚴</span><span class="name">Jura/Vosges</span></div>
+                    <span class="route-arrow">✈️→</span>
+                    <div class="route-stop"><span class="icon">🏎️</span><span class="name">Budapest</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">✈️</span><span class="name">Bengaluru</span></div>
+                </div>
+                
+                <h3>📍 Day-by-Day Itinerary</h3>
+                <div class="timeline">
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=80" alt="Paris" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 1-2: Bengaluru → Paris</h3>
+                                <div class="day-date">July 16-17, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Overnight flight to Paris. Rest and explore the city.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Hostel in Paris • ~€30/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1725864832640-7b022026e61c?w=400&q=80" alt="Alps" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 3: Stage 15 - Plateau de Solaison</h3>
+                                <div class="day-date">July 18, 2026</div>
+                                <div class="day-badges"><span class="day-badge queen">Summit Finish</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Train to Champagnole area. Watch Stage 15: Champagnole → Plateau de Solaison (first ever Tour visit!). Mountain stage in the Jura.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Annecy/Evian area • ~€40/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1628010287384-0688da6bc150?w=400&q=80" alt="Lake Geneva" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 4: Stage 16 - Lake Geneva</h3>
+                                <div class="day-date">July 19, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Stage 16: Evian-les-Bains → Thonon-les-Bains. Flat stage along beautiful Lake Geneva. Great scenery!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Evian/Thonon area • ~€40/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1717711093815-50e836e62c25?w=400&q=80" alt="Alps" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 5: REST DAY - Explore Alps</h3>
+                                <div class="day-date">July 20, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Tour rest day. Explore the Alpine region, maybe visit Annecy (the "Venice of the Alps"), or relax by Lake Geneva.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Annecy • ~€35/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1679587008794-4c5963d0b39d?w=400&q=80" alt="Grenoble" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 6: Stage 17 - Chambéry → Voiron</h3>
+                                <div class="day-date">July 21, 2026</div>
+                                <div class="day-badges"><span class="day-badge queen">Mountain Stage</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Watch Stage 17 through the Alps. Position yourself on a climb near Grenoble. Last Tour day before heading to Budapest!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Grenoble (near airport) • ~€35/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1595537331709-db10d1a3cd0c?w=400&q=80" alt="Budapest" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 7: Fly to Budapest</h3>
+                                <div class="day-date">July 22, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Morning flight Lyon/Geneva → Budapest (~2hrs, €50-100). Explore Budapest - thermal baths, Buda Castle, ruin bars!</p>
+                            <div class="activities">
+                                <div class="activity">
+                                    <span class="activity-icon">🏰</span>
+                                    <div><div class="activity-title">Explore Budapest</div>
+                                    <div class="activity-desc">Fisherman's Bastion, Parliament, Széchenyi Baths</div></div>
+                                </div>
+                            </div>
+                            <div class="stay-info"><strong>Stay:</strong> Hostel in Budapest • ~€20-25/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1673200155848-40313db4e8ad?w=400&q=80" alt="Budapest" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 8: Budapest Sightseeing</h3>
+                                <div class="day-date">July 23, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Full day exploring Budapest. Very budget-friendly city! Hungarian food is amazing and cheap.</p>
+                            <div class="activities">
+                                <div class="activity">
+                                    <span class="activity-icon">♨️</span>
+                                    <div><div class="activity-title">Széchenyi Thermal Bath</div>
+                                    <div class="activity-desc">~€25 entry - relax before the race weekend!</div></div>
+                                </div>
+                                <div class="activity">
+                                    <span class="activity-icon">🍺</span>
+                                    <div><div class="activity-title">Ruin bars in Jewish Quarter</div>
+                                    <div class="activity-desc">Szimpla Kert - famous ruin pub</div></div>
+                                </div>
+                            </div>
+                            <div class="stay-info"><strong>Stay:</strong> Hostel in Budapest • ~€20-25/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card f1-highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1641276248590-e32f778147da?w=400&q=80" alt="F1" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 9-10: F1 HUNGARIAN GP! 🏎️</h3>
+                                <div class="day-date">July 24-25, 2026</div>
+                                <div class="day-badges"><span class="day-badge f1">🏎️ F1 Race Weekend</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">HUNGARORING! Friday practice/qualifying, Saturday practice/qualifying. The track is just 19km from Budapest center.</p>
+                            <div class="activities">
+                                <div class="activity">
+                                    <span class="activity-icon">🎫</span>
+                                    <div><div class="activity-title">General Admission tickets</div>
+                                    <div class="activity-desc">~€100-150 for weekend GA. Book early on formula1.com!</div></div>
+                                </div>
+                                <div class="activity">
+                                    <span class="activity-icon">🚌</span>
+                                    <div><div class="activity-title">Shuttle from Budapest</div>
+                                    <div class="activity-desc">Special race shuttles run from city center</div></div>
+                                </div>
+                            </div>
+                            <div class="stay-info"><strong>Stay:</strong> Budapest • ~€25-35/night (higher during F1)</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card f1-highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1635414764966-682bd029bb01?w=400&q=80" alt="F1 Race" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 11: F1 RACE DAY! 🏁</h3>
+                                <div class="day-date">July 26, 2026</div>
+                                <div class="day-badges"><span class="day-badge f1">🏁 RACE DAY</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">THE RACE! Hungaroring is known for tight racing and drama. 70 laps of pure excitement. 2026 new car regulations = unpredictable racing!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Budapest • ~€30/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1595537331709-db10d1a3cd0c?w=400&q=80" alt="Budapest" class="day-image">
+                            <div class="day-info">
+                                <h3>Days 12-14: Budapest & Return</h3>
+                                <div class="day-date">July 27-29, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Extra days in Budapest (it's cheap!). Maybe day trip to Szentendre or just relax. Fly home July 29.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Budapest • ~€20/night</div>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>💰 Budget Breakdown</h3>
+                    <div class="budget-grid">
+                        <div class="budget-item"><span>✈️ Flights (BLR→Paris, Lyon→Budapest→BLR)</span><span class="amount">₹65-80K</span></div>
+                        <div class="budget-item"><span>🛏️ Accommodation (13 nights)</span><span class="amount">₹25-35K</span></div>
+                        <div class="budget-item"><span>🚄 Transport (trains, buses)</span><span class="amount">₹10-15K</span></div>
+                        <div class="budget-item"><span>🍽️ Food</span><span class="amount">₹22-30K</span></div>
+                        <div class="budget-item"><span>🏎️ F1 Tickets (GA weekend)</span><span class="amount">₹12-18K</span></div>
+                        <div class="budget-item"><span>🛡️ Visa + Insurance</span><span class="amount">₹10-12K</span></div>
+                    </div>
+                    <div class="budget-total">
+                        <span>TOTAL</span>
+                        <span>₹2,20,000 - ₹2,60,000</span>
+                    </div>
+                </div>
             </div>
-            <div class="meta-card">
-                <div class="icon">💰</div>
-                <div class="label">Est. Budget</div>
-                <div class="value">₹1.8-2.2 Lakhs</div>
+            
+            <!-- TRIP 3: TdF + Hungarian GP + Venice Biennale -->
+            <div id="trip3" class="tab-content">
+                <div class="trip-header">
+                    <div class="trip-stat">
+                        <div class="label">Duration</div>
+                        <div class="value">15 Days</div>
+                    </div>
+                    <div class="trip-stat">
+                        <div class="label">Dates</div>
+                        <div class="value">July 15-29</div>
+                    </div>
+                    <div class="trip-stat">
+                        <div class="label">Countries</div>
+                        <div class="value">Italy, France, Hungary</div>
+                    </div>
+                    <div class="trip-stat">
+                        <div class="label">Budget</div>
+                        <div class="value">₹2.5-3.0L</div>
+                    </div>
+                </div>
+                
+                <div class="events-included">
+                    <span class="event-badge biennale">🎨 Venice Biennale - "In Minor Keys"</span>
+                    <span class="event-badge tdf">🚴 Tour de France - Stages 15, 16, 17</span>
+                    <span class="event-badge f1">🏎️ F1 Hungarian GP - Hungaroring</span>
+                </div>
+                
+                <div class="route-visual">
+                    <div class="route-stop"><span class="icon">✈️</span><span class="name">Bengaluru</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🎨</span><span class="name">Venice</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🗼</span><span class="name">Paris</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">🚴</span><span class="name">Alps</span></div>
+                    <span class="route-arrow">✈️→</span>
+                    <div class="route-stop"><span class="icon">🏎️</span><span class="name">Budapest</span></div>
+                    <span class="route-arrow">→</span>
+                    <div class="route-stop"><span class="icon">✈️</span><span class="name">Bengaluru</span></div>
+                </div>
+                
+                <h3>📍 Day-by-Day Itinerary</h3>
+                <div class="timeline">
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1672068667066-f369e9127402?w=400&q=80" alt="Venice" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 1-2: Bengaluru → Venice</h3>
+                                <div class="day-date">July 15-16, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Fly to Venice (via Dubai/Rome). Venice is magical - canals, St Mark's Square, getting lost in the alleys.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Hostel in Mestre/Venice • ~€35-45/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card art-highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1667476157005-7ced9fb24125?w=400&q=80" alt="Biennale" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 3: VENICE BIENNALE 🎨</h3>
+                                <div class="day-date">July 17, 2026</div>
+                                <div class="day-badges"><span class="day-badge art">🎨 61st Biennale</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">The Olympics of the art world! "In Minor Keys" curated by Koyo Kouoh. Two main venues: Giardini (national pavilions) and Arsenale.</p>
+                            <div class="activities">
+                                <div class="activity">
+                                    <span class="activity-icon">🎨</span>
+                                    <div><div class="activity-title">Giardini - National Pavilions</div>
+                                    <div class="activity-desc">30+ countries with dedicated pavilions</div></div>
+                                </div>
+                                <div class="activity">
+                                    <span class="activity-icon">🏛️</span>
+                                    <div><div class="activity-title">Arsenale - Main Exhibition</div>
+                                    <div class="activity-desc">Vast former shipyard with massive installations</div></div>
+                                </div>
+                                <div class="activity">
+                                    <span class="activity-icon">🎫</span>
+                                    <div><div class="activity-title">Tickets</div>
+                                    <div class="activity-desc">~€30 day pass (under 26 discounts available)</div></div>
+                                </div>
+                            </div>
+                            <div class="stay-info"><strong>Stay:</strong> Venice/Mestre • ~€35-45/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400&q=80" alt="Paris" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 4: Venice → Paris</h3>
+                                <div class="day-date">July 18, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Morning in Venice, then budget flight to Paris (~€50-80). Stage 15 happening today - catch it on TV!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Hostel in Paris • ~€30/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1628010287384-0688da6bc150?w=400&q=80" alt="Lake Geneva" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 5: Stage 16 - Lake Geneva</h3>
+                                <div class="day-date">July 19, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">TGV to Evian area. Watch Stage 16: Evian-les-Bains → Thonon-les-Bains along Lake Geneva.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Evian/Thonon • ~€40/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1725864832640-7b022026e61c?w=400&q=80" alt="Alps" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 6: REST DAY - Alpine Exploration</h3>
+                                <div class="day-date">July 20, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Tour rest day. Visit Annecy ("Venice of the Alps") or just enjoy the mountain scenery.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Annecy • ~€35/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1679587008794-4c5963d0b39d?w=400&q=80" alt="Alps" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 7: Stage 17 - Mountain Stage</h3>
+                                <div class="day-date">July 21, 2026</div>
+                                <div class="day-badges"><span class="day-badge queen">Mountain Stage</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Watch Stage 17: Chambéry → Voiron. Position on a climb near Grenoble. Last Tour stage before F1!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Grenoble • ~€35/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1595537331709-db10d1a3cd0c?w=400&q=80" alt="Budapest" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 8: Fly to Budapest</h3>
+                                <div class="day-date">July 22, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Flight Geneva/Lyon → Budapest. Explore this beautiful, budget-friendly city!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Budapest hostel • ~€22/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1673200155848-40313db4e8ad?w=400&q=80" alt="Budapest" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 9: Budapest Sightseeing</h3>
+                                <div class="day-date">July 23, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Full day in Budapest. Buda Castle, thermal baths, ruin bars. Great food, super cheap!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Budapest hostel • ~€22/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card f1-highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1641276248590-e32f778147da?w=400&q=80" alt="F1" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 10-11: F1 HUNGARIAN GP! 🏎️</h3>
+                                <div class="day-date">July 24-25, 2026</div>
+                                <div class="day-badges"><span class="day-badge f1">🏎️ Race Weekend</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Friday & Saturday at Hungaroring! Practice, qualifying. The 2026 cars with new regulations - exciting times!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Budapest • ~€30/night (F1 premium)</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card f1-highlight">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1635414764966-682bd029bb01?w=400&q=80" alt="F1 Race" class="day-image">
+                            <div class="day-info">
+                                <h3>Day 12: F1 RACE DAY! 🏁</h3>
+                                <div class="day-date">July 26, 2026</div>
+                                <div class="day-badges"><span class="day-badge f1">🏁 RACE DAY</span></div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">70 laps of wheel-to-wheel action! Hungaroring is known for drama and overtaking challenges.</p>
+                            <div class="stay-info"><strong>Stay:</strong> Budapest • ~€25/night</div>
+                        </div>
+                    </article>
+                    
+                    <article class="day-card">
+                        <div class="day-header">
+                            <img src="https://images.unsplash.com/photo-1595537331709-db10d1a3cd0c?w=400&q=80" alt="Budapest" class="day-image">
+                            <div class="day-info">
+                                <h3>Days 13-15: Budapest & Return</h3>
+                                <div class="day-date">July 27-29, 2026</div>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <p class="day-summary">Relax in Budapest, maybe a day trip. Fly home July 29. What a trip!</p>
+                            <div class="stay-info"><strong>Stay:</strong> Budapest • ~€20/night</div>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="budget-section">
+                    <h3>💰 Budget Breakdown</h3>
+                    <div class="budget-grid">
+                        <div class="budget-item"><span>✈️ Flights (BLR→Venice, Paris, Budapest→BLR)</span><span class="amount">₹70-85K</span></div>
+                        <div class="budget-item"><span>🛏️ Accommodation (14 nights)</span><span class="amount">₹30-40K</span></div>
+                        <div class="budget-item"><span>🚄 Transport (trains, local flights)</span><span class="amount">₹15-20K</span></div>
+                        <div class="budget-item"><span>🍽️ Food</span><span class="amount">₹25-32K</span></div>
+                        <div class="budget-item"><span>🎨 Biennale + F1 Tickets</span><span class="amount">₹15-22K</span></div>
+                        <div class="budget-item"><span>🛡️ Visa + Insurance</span><span class="amount">₹10-12K</span></div>
+                    </div>
+                    <div class="budget-total">
+                        <span>TOTAL</span>
+                        <span>₹2,50,000 - ₹3,00,000</span>
+                    </div>
+                </div>
             </div>
-        </section>
-        
-        <section class="alert">
-            <div class="alert-title">⚠️ Important: Event Scheduling Conflict</div>
-            <p><strong>Wimbledon 2026</strong> (June 29 - July 12) ends 12 days before the Tour de France Alpine stages (July 24-25). <strong>F1 British GP</strong> (July 3-5) overlaps with early Wimbledon. <strong>Venice Biennale</strong> runs May-November, so it can be added flexibly. This itinerary focuses on the Tour de France mountain stages as the primary objective.</p>
-        </section>
-        
-        <h2 class="section-title">📍 Day-by-Day Itinerary</h2>
-        
-        <div class="timeline">
-            <!-- Day 1 -->
-            <article class="day-card">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1575323734774-d6c47992c537?w=1200&q=80" alt="London" class="day-image">
-                    <span class="day-badge">Day 1</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>✈️ Bengaluru → Paris</h3>
-                    </div>
-                    <div class="day-date">Saturday, July 18, 2026</div>
-                    <div class="day-summary">
-                        <p>Depart from Bengaluru. Look for flights via Middle East (Dubai/Doha) for best budget options. Overnight flight.</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon travel">✈️</div>
-                            <div class="activity-details">
-                                <div class="activity-time">Evening Departure</div>
-                                <div class="activity-title">Flight BLR → Paris CDG</div>
-                                <div class="activity-desc">Via Dubai/Doha - ~12-14 hours total. Book via Skyscanner 3-4 months ahead.</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="logistics">
-                        <div class="logistics-item">✈️ Flight</div>
-                        <div class="logistics-item">💰 ~₹45,000-55,000</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 2 -->
-            <article class="day-card">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1716131369717-0dfad8959410?w=1200&q=80" alt="Paris" class="day-image">
-                    <span class="day-badge">Day 2</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>🗼 Arrive Paris</h3>
-                    </div>
-                    <div class="day-date">Sunday, July 19, 2026</div>
-                    <div class="day-summary">
-                        <p>Arrive Paris early morning. Rest and explore the city. This is also the day of Stage 16 (Evian-les-Bains to Thonon-les-Bains) - a flat stage near Lake Geneva.</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon travel">🛬</div>
-                            <div class="activity-details">
-                                <div class="activity-time">07:00</div>
-                                <div class="activity-title">Arrive Paris CDG</div>
-                                <div class="activity-desc">Take RER B to city center (~€11)</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon stay">🏨</div>
-                            <div class="activity-details">
-                                <div class="activity-time">10:00</div>
-                                <div class="activity-title">Check-in Hostel</div>
-                                <div class="activity-desc">Generator Paris or St Christopher's - store luggage, rest</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon visit">🚶</div>
-                            <div class="activity-details">
-                                <div class="activity-time">14:00</div>
-                                <div class="activity-title">Explore Montmartre</div>
-                                <div class="activity-desc">Walk around Sacré-Cœur - this is where Tour finishes on July 26!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stay-info">
-                        <h4>🛏️ Tonight's Stay</h4>
-                        <p>Hostel in Paris (Montmartre area)</p>
-                        <div class="cost-estimate">~€25-35/night in dorm</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 3 -->
-            <article class="day-card">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1679587008794-4c5963d0b39d?w=1200&q=80" alt="Grenoble" class="day-image">
-                    <span class="day-badge">Day 3</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>🚄 Paris → Grenoble</h3>
-                    </div>
-                    <div class="day-date">Monday, July 20, 2026</div>
-                    <div class="day-summary">
-                        <p>Tour Rest Day! Travel to Grenoble - the gateway to the Alps. TGV high-speed train takes ~3 hours. Grenoble is affordable and well-connected to mountain stages.</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon travel">🚄</div>
-                            <div class="activity-details">
-                                <div class="activity-time">09:00</div>
-                                <div class="activity-title">TGV Paris Gare de Lyon → Grenoble</div>
-                                <div class="activity-desc">Book on SNCF Connect app - ~€30-50 if booked early</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon visit">🏔️</div>
-                            <div class="activity-details">
-                                <div class="activity-time">14:00</div>
-                                <div class="activity-title">Explore Grenoble</div>
-                                <div class="activity-desc">Bastille cable car (€6.50 return), old town, Alpine views</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon meal">🍽️</div>
-                            <div class="activity-details">
-                                <div class="activity-time">19:00</div>
-                                <div class="activity-title">Dinner at local brasserie</div>
-                                <div class="activity-desc">Try tartiflette or raclette - Alpine specialties</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stay-info">
-                        <h4>🛏️ Tonight's Stay</h4>
-                        <p>Hostel/Budget Hotel in Grenoble</p>
-                        <div class="cost-estimate">~€25-40/night</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 4 -->
-            <article class="day-card">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1725864832640-7b022026e61c?w=1200&q=80" alt="French Alps" class="day-image">
-                    <span class="day-badge">Day 4</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>🏔️ Stage 17: Chambéry → Voiron</h3>
-                    </div>
-                    <div class="day-date">Tuesday, July 21, 2026</div>
-                    <div class="day-summary">
-                        <p>A transitional stage through the Alps. Good day to scout viewing locations for the epic stages ahead. Consider renting a bike to explore the region!</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon visit">🚴</div>
-                            <div class="activity-details">
-                                <div class="activity-time">09:00</div>
-                                <div class="activity-title">Scout Alpe d'Huez route</div>
-                                <div class="activity-desc">Bus/car to Bourg d'Oisans - base of Alpe d'Huez</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon event">📺</div>
-                            <div class="activity-details">
-                                <div class="activity-time">14:00</div>
-                                <div class="activity-title">Watch Stage 17 finish in Voiron</div>
-                                <div class="activity-desc">Or catch on TV at a local bar - atmosphere is amazing!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stay-info">
-                        <h4>🛏️ Tonight's Stay</h4>
-                        <p>Grenoble or move to Bourg d'Oisans area</p>
-                        <div class="cost-estimate">~€30-45/night</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 5 -->
-            <article class="day-card">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1717711093815-50e836e62c25?w=1200&q=80" alt="Alps cycling" class="day-image">
-                    <span class="day-badge">Day 5</span>
-                    <span class="day-highlight">⭐ Mountain Stage</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>🏔️ Stage 18: Voiron → Orcières-Merlette</h3>
-                    </div>
-                    <div class="day-date">Wednesday, July 22, 2026</div>
-                    <div class="day-summary">
-                        <p>185km mountain stage! Orcières-Merlette is legendary - where Luis Ocaña defeated Eddy Merckx in 1971. GC battle intensifies!</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon event">🚴</div>
-                            <div class="activity-details">
-                                <div class="activity-time">All Day</div>
-                                <div class="activity-title">Watch Stage 18</div>
-                                <div class="activity-desc">Position yourself on one of the climbs - arrive early for best spots!</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon visit">📸</div>
-                            <div class="activity-details">
-                                <div class="activity-time">12:00-16:00</div>
-                                <div class="activity-title">Caravan passes by!</div>
-                                <div class="activity-desc">Free goodies, music, atmosphere - arrives ~2 hours before riders</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stay-info">
-                        <h4>🛏️ Tonight's Stay</h4>
-                        <p>Bourg d'Oisans or nearby village</p>
-                        <div class="cost-estimate">~€35-50/night (prices rise during Tour)</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 6 -->
-            <article class="day-card">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1628010287384-0688da6bc150?w=1200&q=80" alt="Bourg d'Oisans valley" class="day-image">
-                    <span class="day-badge">Day 6</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>🏕️ Position for Alpe d'Huez</h3>
-                    </div>
-                    <div class="day-date">Thursday, July 23, 2026</div>
-                    <div class="day-summary">
-                        <p>Stage 19 tomorrow starts from Gap. Today, secure your spot on Alpe d'Huez! Many fans camp overnight on the famous 21 bends. The atmosphere is like a festival.</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon travel">🚌</div>
-                            <div class="activity-details">
-                                <div class="activity-time">Morning</div>
-                                <div class="activity-title">Head to Alpe d'Huez</div>
-                                <div class="activity-desc">Bus from Grenoble or hitchhike - cycling fans are friendly!</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon visit">⛺</div>
-                            <div class="activity-details">
-                                <div class="activity-time">Afternoon</div>
-                                <div class="activity-title">Set up viewing spot</div>
-                                <div class="activity-desc">Dutch Corner (Bend 7) is legendary! Bring food, water, sunscreen</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon meal">🎉</div>
-                            <div class="activity-details">
-                                <div class="activity-time">Evening</div>
-                                <div class="activity-title">Party atmosphere!</div>
-                                <div class="activity-desc">BBQs, music, fans from all over the world - incredible vibe</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stay-info">
-                        <h4>🛏️ Tonight's Stay</h4>
-                        <p>Camp on the mountain! (Bring sleeping bag/tent)</p>
-                        <div class="cost-estimate">Free (or €20-30 for campsite nearby)</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 7 - MAIN EVENT -->
-            <article class="day-card" style="border: 3px solid var(--secondary);">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1482659853714-4bf4b5f2e7bf?w=1200&q=80" alt="Alpe d'Huez" class="day-image">
-                    <span class="day-badge" style="background: var(--secondary);">Day 7 ⭐</span>
-                    <span class="day-highlight">🏆 QUEEN STAGE!</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>👑 Stage 19: Gap → ALPE D'HUEZ</h3>
-                    </div>
-                    <div class="day-date">Friday, July 24, 2026</div>
-                    <div class="day-summary">
-                        <p>THE DAY! 128km mountain stage finishing atop the legendary Alpe d'Huez via the classic route from Bourg d'Oisans. The famous 21 hairpins, each named after a past winner. This is cycling's most famous climb!</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon event">🚴</div>
-                            <div class="activity-details">
-                                <div class="activity-time">~14:00-17:00</div>
-                                <div class="activity-title">RIDERS ARRIVE!</div>
-                                <div class="activity-desc">Watch Pogačar, Vingegaard battle on the slopes! Cheer, wave flags, make memories!</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon visit">🎊</div>
-                            <div class="activity-details">
-                                <div class="activity-time">All Day</div>
-                                <div class="activity-title">Incredible atmosphere</div>
-                                <div class="activity-desc">Helicopters overhead, crowds roaring, history in the making</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stay-info">
-                        <h4>🛏️ Tonight's Stay</h4>
-                        <p>Descend to Bourg d'Oisans or stay on mountain</p>
-                        <div class="cost-estimate">~€40-60/night</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 8 - QUEEN STAGE 2 -->
-            <article class="day-card" style="border: 3px solid var(--warning);">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1696054430983-b75eb77462c6?w=1200&q=80" alt="Col du Galibier" class="day-image">
-                    <span class="day-badge" style="background: var(--warning);">Day 8 🔥</span>
-                    <span class="day-highlight">🏔️ BRUTAL STAGE</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>⛰️ Stage 20: Bourg d'Oisans → ALPE D'HUEZ (via Galibier!)</h3>
-                    </div>
-                    <div class="day-date">Saturday, July 25, 2026</div>
-                    <div class="day-summary">
-                        <p>The hardest day of the Tour! 171km with 5,600m climbing. Col de la Croix de Fer (24km), Col du Télégraphe (12km), the mighty Col du Galibier (17km at 2,631m - highest point!), then Col de Sarenne to Alpe d'Huez. This is where the Tour is decided!</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon event">🏔️</div>
-                            <div class="activity-details">
-                                <div class="activity-time">All Day</div>
-                                <div class="activity-title">Watch on Col du Galibier or Alpe d'Huez</div>
-                                <div class="activity-desc">Position on Galibier summit for epic views, or return to Alpe d'Huez</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon visit">📸</div>
-                            <div class="activity-details">
-                                <div class="activity-time">~15:00-18:00</div>
-                                <div class="activity-title">Witness cycling history</div>
-                                <div class="activity-desc">The yellow jersey fight - possibly the most dramatic day of the Tour!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stay-info">
-                        <h4>🛏️ Tonight's Stay</h4>
-                        <p>Bourg d'Oisans or Grenoble</p>
-                        <div class="cost-estimate">~€35-50/night</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 9 -->
-            <article class="day-card">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1648126506406-1ad19a0fc492?w=1200&q=80" alt="Paris" class="day-image">
-                    <span class="day-badge">Day 9</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>🚄 Return to Paris</h3>
-                    </div>
-                    <div class="day-date">Sunday, July 26, 2026</div>
-                    <div class="day-summary">
-                        <p>Stage 21: The Tour finale in Paris! The peloton rides the slopes of Montmartre three times before the traditional Champs-Élysées finish. Travel to Paris to witness the crowning of the champion!</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon travel">🚄</div>
-                            <div class="activity-details">
-                                <div class="activity-time">Morning</div>
-                                <div class="activity-title">TGV Grenoble → Paris</div>
-                                <div class="activity-desc">Early train to catch the finale!</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon event">🏆</div>
-                            <div class="activity-details">
-                                <div class="activity-time">15:00-19:00</div>
-                                <div class="activity-title">Tour de France Finale!</div>
-                                <div class="activity-desc">Watch on Champs-Élysées - champagne, celebrations, yellow jersey coronation!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stay-info">
-                        <h4>🛏️ Tonight's Stay</h4>
-                        <p>Hostel in Paris</p>
-                        <div class="cost-estimate">~€30-40/night</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 10-11 -->
-            <article class="day-card">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=1200&q=80" alt="Paris exploration" class="day-image">
-                    <span class="day-badge">Days 10-11</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>🗼 Paris Exploration</h3>
-                    </div>
-                    <div class="day-date">Monday-Tuesday, July 27-28, 2026</div>
-                    <div class="day-summary">
-                        <p>Two days to explore Paris at your own pace. Many attractions are free or have free days!</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon visit">🏛️</div>
-                            <div class="activity-details">
-                                <div class="activity-title">Free/Budget Activities</div>
-                                <div class="activity-desc">Notre-Dame (exterior), Sacré-Cœur, Seine walks, Tuileries Garden, free museum days (1st Sunday)</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon visit">🎨</div>
-                            <div class="activity-details">
-                                <div class="activity-title">Budget Museums</div>
-                                <div class="activity-desc">Louvre (€17), Musée d'Orsay (€16) - both free under 26 for EU residents</div>
-                            </div>
-                        </div>
-                        <div class="activity">
-                            <div class="activity-icon meal">🥐</div>
-                            <div class="activity-details">
-                                <div class="activity-title">Budget Eating</div>
-                                <div class="activity-desc">Boulangeries, supermarkets, €10-15 lunch menus, falafel in Le Marais</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="stay-info">
-                        <h4>🛏️ Stay</h4>
-                        <p>Same hostel in Paris</p>
-                        <div class="cost-estimate">~€30-40/night</div>
-                    </div>
-                </div>
-            </article>
-            
-            <!-- Day 12 -->
-            <article class="day-card">
-                <div class="day-header">
-                    <img src="https://images.unsplash.com/photo-1575323734774-d6c47992c537?w=1200&q=80" alt="Departure" class="day-image">
-                    <span class="day-badge">Day 12</span>
-                </div>
-                <div class="day-content">
-                    <div class="day-title">
-                        <h3>✈️ Return to Bengaluru</h3>
-                    </div>
-                    <div class="day-date">Wednesday, July 29, 2026</div>
-                    <div class="day-summary">
-                        <p>Fly home with incredible memories of witnessing cycling's greatest race!</p>
-                    </div>
-                    <div class="activities">
-                        <div class="activity">
-                            <div class="activity-icon travel">✈️</div>
-                            <div class="activity-details">
-                                <div class="activity-time">Morning</div>
-                                <div class="activity-title">Paris CDG → Bengaluru</div>
-                                <div class="activity-desc">Via Dubai/Doha, arrive next day</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </article>
         </div>
         
-        <!-- Events Comparison -->
-        <section class="events-note">
-            <h3 class="section-title">🎯 Other Events You Wanted</h3>
-            <div class="event-item">
-                <div>
-                    <strong>Tour de France Mountain Stages</strong>
-                    <p>July 22-25, 2026 - Stage 18, 19, 20 (Alpe d'Huez x2)</p>
-                </div>
-                <span class="event-status included">✓ Included</span>
-            </div>
-            <div class="event-item">
-                <div>
-                    <strong>Venice Biennale</strong>
-                    <p>May 9 - November 22, 2026</p>
-                </div>
-                <span class="event-status possible">Can Add</span>
-            </div>
-            <div class="event-item">
-                <div>
-                    <strong>Wimbledon</strong>
-                    <p>June 29 - July 12, 2026</p>
-                </div>
-                <span class="event-status conflict">12 Days Before TdF</span>
-            </div>
-            <div class="event-item">
-                <div>
-                    <strong>F1 British GP (Silverstone)</strong>
-                    <p>July 3-5, 2026</p>
-                </div>
-                <span class="event-status conflict">20 Days Before TdF</span>
-            </div>
-            <div class="event-item">
-                <div>
-                    <strong>F1 Belgian GP (Spa)</strong>
-                    <p>July 17-19, 2026</p>
-                </div>
-                <span class="event-status possible">Tight Fit</span>
-            </div>
-            <p style="margin-top: 16px; font-size: 0.9375rem; color: var(--gray-600);">
-                <strong>Recommendation:</strong> For 10-15 days on budget, focus on Tour de France. To add Wimbledon, you'd need ~20+ days and UK visa. Venice Biennale is easiest to add - it's in Schengen and runs for months.
-            </p>
-        </section>
+        <!-- Comparison Table -->
+        <div style="background: white; border-radius: 16px; padding: 32px; margin-bottom: 32px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+            <h3 style="margin-bottom: 16px;">📊 Trip Comparison</h3>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Trip 1</th>
+                        <th>Trip 2</th>
+                        <th>Trip 3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Duration</strong></td>
+                        <td>12 days</td>
+                        <td>14 days</td>
+                        <td>15 days</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Budget</strong></td>
+                        <td>₹1.8-2.2L</td>
+                        <td>₹2.2-2.6L</td>
+                        <td>₹2.5-3.0L</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Tour de France</strong></td>
+                        <td><span class="check">✓</span> Stages 17-20 + Finale</td>
+                        <td><span class="check">✓</span> Stages 15-17</td>
+                        <td><span class="check">✓</span> Stages 16-17</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Alpe d'Huez (x2)</strong></td>
+                        <td><span class="check">✓</span> Yes!</td>
+                        <td><span class="cross">✗</span> No</td>
+                        <td><span class="cross">✗</span> No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Paris Finale</strong></td>
+                        <td><span class="check">✓</span> Yes!</td>
+                        <td><span class="cross">✗</span> No</td>
+                        <td><span class="cross">✗</span> No</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F1 Hungarian GP</strong></td>
+                        <td><span class="cross">✗</span> No</td>
+                        <td><span class="check">✓</span> Full weekend</td>
+                        <td><span class="check">✓</span> Full weekend</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Venice Biennale</strong></td>
+                        <td><span class="cross">✗</span> No</td>
+                        <td><span class="cross">✗</span> No</td>
+                        <td><span class="check">✓</span> 1 day</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Countries</strong></td>
+                        <td>France</td>
+                        <td>France, Hungary</td>
+                        <td>Italy, France, Hungary</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>Cycling purists</td>
+                        <td>Motorsport + cycling fans</td>
+                        <td>Art + sports lovers</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         
-        <!-- Budget -->
-        <section class="budget-section">
-            <h3 class="section-title">💰 Budget Breakdown (Estimated)</h3>
-            <div class="budget-grid">
-                <div class="budget-item">
-                    <span class="category">✈️ Flights (BLR↔Paris)</span>
-                    <span class="amount">₹50,000 - 60,000</span>
-                </div>
-                <div class="budget-item">
-                    <span class="category">🛏️ Accommodation (11 nights)</span>
-                    <span class="amount">₹25,000 - 35,000</span>
-                </div>
-                <div class="budget-item">
-                    <span class="category">🚄 Transport (trains, buses)</span>
-                    <span class="amount">₹8,000 - 12,000</span>
-                </div>
-                <div class="budget-item">
-                    <span class="category">🍽️ Food (budget eating)</span>
-                    <span class="amount">₹20,000 - 28,000</span>
-                </div>
-                <div class="budget-item">
-                    <span class="category">🎫 Activities & Entry</span>
-                    <span class="amount">₹5,000 - 8,000</span>
-                </div>
-                <div class="budget-item">
-                    <span class="category">📱 SIM/Data, Misc</span>
-                    <span class="amount">₹3,000 - 5,000</span>
-                </div>
-                <div class="budget-item">
-                    <span class="category">🛡️ Travel Insurance</span>
-                    <span class="amount">₹2,500 - 4,000</span>
-                </div>
-                <div class="budget-item">
-                    <span class="category">💳 Visa Fee (Schengen)</span>
-                    <span class="amount">₹7,000 - 8,000</span>
-                </div>
-            </div>
-            <div class="budget-total">
-                <span>TOTAL ESTIMATED</span>
-                <span>₹1,80,000 - ₹2,20,000</span>
-            </div>
-            <p style="margin-top: 16px; font-size: 0.875rem; color: var(--gray-600); text-align: center;">
-                * Prices vary based on booking timing and exchange rates. Book flights 3-4 months ahead for best prices.
-            </p>
-        </section>
-        
-        <!-- Visa Information -->
-        <section class="visa-section">
-            <h3 class="section-title">🛂 Visa Requirements</h3>
+        <!-- Visa Info -->
+        <div class="visa-section">
+            <h3>🛂 Visa Requirements (Same for All Trips)</h3>
             <div class="visa-grid">
                 <div class="visa-card">
-                    <h4>🇪🇺 Schengen Visa (Required)</h4>
+                    <h4>🇪🇺 Schengen Visa</h4>
                     <ul>
-                        <li>Apply through French Embassy/VFS (main destination)</li>
-                        <li>Apply 1-2 months before travel</li>
-                        <li>Valid for 90 days within 180-day period</li>
+                        <li>Single visa covers France, Italy, Hungary</li>
+                        <li>Apply to country with longest stay</li>
                         <li>Fee: ~€80 (~₹7,500)</li>
-                        <li>Travel insurance mandatory (€30,000 coverage)</li>
-                        <li>Processing: 15-30 working days</li>
+                        <li>Processing: 15-30 days</li>
+                        <li>Apply 1-2 months before travel</li>
                     </ul>
                 </div>
                 <div class="visa-card">
                     <h4>📋 Key Documents</h4>
                     <ul>
                         <li>Passport valid 6+ months</li>
-                        <li>Flight bookings (refundable)</li>
-                        <li>Hotel/hostel reservations</li>
+                        <li>Flight + hotel bookings</li>
                         <li>Bank statements (6 months)</li>
+                        <li>Travel insurance (€30K coverage)</li>
                         <li>Cover letter with itinerary</li>
-                        <li>Employment/income proof</li>
-                        <li>Travel insurance certificate</li>
                     </ul>
                 </div>
             </div>
-            <div class="alert" style="margin-top: 24px;">
-                <div class="alert-title">💡 Pro Tip</div>
-                <p>France has high approval rates for Indian tourists. Book refundable flights/hotels for visa application. Apply through VFS Global Bangalore.</p>
-            </div>
-        </section>
+        </div>
         
         <!-- Tips -->
-        <section class="tips-section">
-            <h3 class="section-title">💡 Budget Travel Tips</h3>
+        <div style="margin-top: 32px;">
+            <h3 style="margin-bottom: 16px;">💡 Budget Tips</h3>
             <div class="tips-grid">
                 <div class="tip-card">
                     <h4>✈️ Flights</h4>
-                    <p>Book 3-4 months ahead. Check Emirates, Qatar, Etihad via Dubai/Doha. Use Google Flights for tracking prices.</p>
-                </div>
-                <div class="tip-card">
-                    <h4>🚄 Trains</h4>
-                    <p>Book on SNCF Connect app. Early bird fares (Prem's) can be €20-30 vs €80+. Eurail pass rarely worth it for short trips.</p>
-                </div>
-                <div class="tip-card">
-                    <h4>🛏️ Accommodation</h4>
-                    <p>Hostels (€25-40/night) offer great value. Generator, St Christopher's are reliable chains. Book early for Tour period!</p>
-                </div>
-                <div class="tip-card">
-                    <h4>🍽️ Food</h4>
-                    <p>Supermarkets (Carrefour, Lidl) for breakfast/lunch. €12-15 "formule" lunch menus are great value. Picnic in parks!</p>
+                    <p>Book 3-4 months ahead via Skyscanner. Emirates/Qatar via Dubai usually cheapest.</p>
                 </div>
                 <div class="tip-card">
                     <h4>🚴 Tour de France</h4>
-                    <p>Watching is FREE! Arrive early for good spots. Bring food, water, sunscreen. The caravan gives free stuff!</p>
+                    <p>Watching is FREE! Just find a spot on the route. Caravan gives free stuff!</p>
                 </div>
                 <div class="tip-card">
-                    <h4>📱 Connectivity</h4>
-                    <p>Get Orange or Free Mobile SIM at airport (~€20-30 for data). WhatsApp works on WiFi. Download offline maps.</p>
+                    <h4>🏎️ F1 Tickets</h4>
+                    <p>General Admission ~€100-150 for weekend. Book on formula1.com early!</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🎨 Venice</h4>
+                    <p>Stay in Mestre (mainland) - much cheaper. Take bus/train to Venice island.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🇭🇺 Budapest</h4>
+                    <p>Super budget-friendly! Great food for €5-10. Hostels €15-25/night.</p>
+                </div>
+                <div class="tip-card">
+                    <h4>🚄 Trains</h4>
+                    <p>Book SNCF early for cheap fares. Low-cost flights (Ryanair/Wizz) between cities.</p>
                 </div>
             </div>
-        </section>
+        </div>
     </main>
     
     <footer>
-        <p>🚴 Trip planned for Tour de France 2026 • Images from Unsplash</p>
-        <p style="margin-top: 8px;">Remember: The best view of the Tour is FREE - just find your spot on the mountain!</p>
+        <p>🌍 Europe Trip Planner 2026 • Tour de France (July 4-26) • F1 Hungarian GP (July 24-26) • Venice Biennale (May 9 - Nov 22)</p>
+        <p style="margin-top: 8px;">Images from Unsplash • All event watching is FREE except F1 tickets!</p>
     </footer>
     
     <script>
-        // Itinerary data following design.md JSON structure
-        const itineraryData = {
-            "itinerary_id": "europe-tdf-2026",
-            "trip_meta": {
-                "destination": "France (Paris, French Alps)",
-                "start_date": "2026-07-18",
-                "end_date": "2026-07-29",
-                "total_days": 12,
-                "people_count": 1,
-                "travel_style": ["budget", "adventure", "sports"],
-                "budget_range": "budget",
-                "preferences": {
-                    "activities": ["cycling", "mountain", "cultural"],
-                    "pace": "moderate",
-                    "mobility_constraints": null
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        // Itinerary data structure following design.md
+        const trips = {
+            trip1: {
+                itinerary_id: "tdf-only-2026",
+                trip_meta: {
+                    destination: "France",
+                    start_date: "2026-07-18",
+                    end_date: "2026-07-29",
+                    total_days: 12,
+                    people_count: 1,
+                    travel_style: ["budget", "sports"],
+                    budget_range: "budget",
+                    events: ["Tour de France Stages 17-20", "Paris Finale"]
                 }
             },
-            "days": [
-                {
-                    "day_number": 1,
-                    "date": "2026-07-18",
-                    "city": "Bengaluru → Paris",
-                    "summary": {
-                        "headline": "Departure from India",
-                        "mood": "easy",
-                        "primary_theme": "travel"
-                    },
-                    "timeline": [
-                        {
-                            "id": "1-1",
-                            "type": "transfer",
-                            "title": "Flight BLR → Paris CDG",
-                            "description": "Overnight flight via Dubai/Doha",
-                            "start_time": "21:00",
-                            "category": "transport"
-                        }
-                    ],
-                    "stay": null,
-                    "logistics": {
-                        "transport_used": ["flight"],
-                        "estimated_cost": { "currency": "INR", "amount": 50000 }
-                    }
-                },
-                {
-                    "day_number": 2,
-                    "date": "2026-07-19",
-                    "city": "Paris",
-                    "summary": {
-                        "headline": "Arrive Paris, rest and explore",
-                        "mood": "easy",
-                        "primary_theme": "arrival"
-                    },
-                    "timeline": [
-                        {
-                            "id": "2-1",
-                            "type": "arrival",
-                            "title": "Arrive Paris CDG",
-                            "start_time": "07:00",
-                            "category": "transport"
-                        },
-                        {
-                            "id": "2-2",
-                            "type": "check_in",
-                            "title": "Check-in hostel",
-                            "start_time": "10:00",
-                            "category": "accommodation"
-                        },
-                        {
-                            "id": "2-3",
-                            "type": "visit",
-                            "title": "Explore Montmartre",
-                            "start_time": "14:00",
-                            "end_time": "18:00",
-                            "category": "sightseeing"
-                        }
-                    ],
-                    "stay": {
-                        "name": "Generator Paris or St Christopher's",
-                        "type": "hostel",
-                        "booking": { "status": "pending" }
-                    },
-                    "logistics": {
-                        "transport_used": ["train", "walk"],
-                        "estimated_cost": { "currency": "EUR", "amount": 45 }
-                    }
-                },
-                {
-                    "day_number": 7,
-                    "date": "2026-07-24",
-                    "city": "Alpe d'Huez",
-                    "summary": {
-                        "headline": "QUEEN STAGE - Stage 19 Gap → Alpe d'Huez",
-                        "mood": "exciting",
-                        "primary_theme": "main_event"
-                    },
-                    "timeline": [
-                        {
-                            "id": "7-1",
-                            "type": "activity",
-                            "title": "Watch Stage 19 finish at Alpe d'Huez",
-                            "description": "128km mountain stage - the famous 21 hairpins!",
-                            "start_time": "14:00",
-                            "end_time": "18:00",
-                            "category": "sports_event",
-                            "ui_flags": { "highlight": true }
-                        }
-                    ],
-                    "stay": {
-                        "name": "Bourg d'Oisans or mountain camping",
-                        "type": "hostel/camping"
-                    },
-                    "logistics": {
-                        "transport_used": ["bus", "walk"],
-                        "estimated_cost": { "currency": "EUR", "amount": 50 }
-                    }
-                },
-                {
-                    "day_number": 8,
-                    "date": "2026-07-25",
-                    "city": "French Alps",
-                    "summary": {
-                        "headline": "BRUTAL STAGE - Stage 20 via Galibier to Alpe d'Huez",
-                        "mood": "intense",
-                        "primary_theme": "main_event"
-                    },
-                    "timeline": [
-                        {
-                            "id": "8-1",
-                            "type": "activity",
-                            "title": "Watch Stage 20 - 5600m climbing!",
-                            "description": "Croix de Fer, Télégraphe, Galibier (2631m), Sarenne to Alpe d'Huez",
-                            "start_time": "12:00",
-                            "end_time": "18:00",
-                            "category": "sports_event",
-                            "ui_flags": { "highlight": true }
-                        }
-                    ],
-                    "stay": {
-                        "name": "Grenoble or Bourg d'Oisans",
-                        "type": "hostel"
-                    },
-                    "logistics": {
-                        "transport_used": ["bus", "walk"],
-                        "estimated_cost": { "currency": "EUR", "amount": 55 }
-                    }
+            trip2: {
+                itinerary_id: "tdf-f1-2026",
+                trip_meta: {
+                    destination: "France, Hungary",
+                    start_date: "2026-07-16",
+                    end_date: "2026-07-29",
+                    total_days: 14,
+                    people_count: 1,
+                    travel_style: ["budget", "sports", "motorsport"],
+                    budget_range: "mid-budget",
+                    events: ["Tour de France Stages 15-17", "F1 Hungarian GP"]
                 }
-            ]
+            },
+            trip3: {
+                itinerary_id: "tdf-f1-biennale-2026",
+                trip_meta: {
+                    destination: "Italy, France, Hungary",
+                    start_date: "2026-07-15",
+                    end_date: "2026-07-29",
+                    total_days: 15,
+                    people_count: 1,
+                    travel_style: ["budget", "sports", "art", "culture"],
+                    budget_range: "mid-budget",
+                    events: ["Venice Biennale", "Tour de France Stages 16-17", "F1 Hungarian GP"]
+                }
+            }
         };
         
-        console.log('Itinerary Data:', itineraryData);
+        console.log('Trip Options:', trips);
     </script>
 </body>
 </html>
